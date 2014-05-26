@@ -11,7 +11,7 @@ namespace MvcApplication1.Controllers
     {
       
         // POST api/postlocation
-        public void Post(string appKey,string assetId,string lat, string lon, [FromBody]string value)
+        public string Post(string appKey,string assetId,string lat, string lon, [FromBody]string value)
         {
             string[] geoCordinates;
             if (appKey == "ttpapikey.asxc123nju89mno0")
@@ -23,6 +23,7 @@ namespace MvcApplication1.Controllers
 
 
             }
+            return lat + "," + lon;
         }
         
         // PUT api/postlocation/5
