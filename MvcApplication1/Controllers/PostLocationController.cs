@@ -19,6 +19,10 @@ namespace MvcApplication1.Controllers
                 if (value != null)
                 {
                     geoCordinates = value.Split(',');
+                    if (geoCordinates.Length > 1)
+                    {
+                        return geoCordinates[0] + "," + geoCordinates[1];
+                    }
                 }
 
 
