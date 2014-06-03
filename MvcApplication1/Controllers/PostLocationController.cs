@@ -36,7 +36,7 @@ namespace MvcApplication1.Controllers
                         }
                         catch (Exception ex)
                         {
-                            throw;
+                            throw ex.InnerException;
                         }
                         
                         //string insertQuery = "insert into AssetLocationDet (assetId,latitude,longitude) Values (" + assetId + "," + geoCordinates[0] + "," + geoCordinates[1] + ")";
@@ -58,7 +58,7 @@ namespace MvcApplication1.Controllers
             }
             catch (Exception ex)
             {
-                throw;
+                throw ex.InnerException;
             }
             return lat + "," + lon;
         }
