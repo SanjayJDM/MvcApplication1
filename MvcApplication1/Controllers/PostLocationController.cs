@@ -4,6 +4,9 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Data.SqlClient;
+using MySql.Data.MySqlClient;
+using System.Configuration;
 
 namespace MvcApplication1.Controllers
 {
@@ -14,6 +17,8 @@ namespace MvcApplication1.Controllers
         public string Post(string appKey,string assetId,string lat, string lon, [FromBody]string value)
         {
             string[] geoCordinates;
+            MySqlConnection con = new MySqlConnection(ConfigurationManager.AppSettings["MySqlConString"]);
+            MySqlCommand cmd;
             if (appKey == "ttpapikey.asxc123nju89mno0")
             {
                 if (value != null)
@@ -21,11 +26,39 @@ namespace MvcApplication1.Controllers
                     geoCordinates = value.Split(',');
                     if (geoCordinates.Length > 1)
                     {
+
+                        con.Open();
+                        try
+                        {
+                            cmd = con.CreateCommand();
+                            cmd.CommandText = "INSERT INTO AssetLocationDet (assetId,latitude,longitude) VALUES (" + assetId + "," + geoCordinates[0] + "," + geoCordinates[1] + ")";
+                            cmd.ExecuteNonQuery();
+                        }
+                        catch (Exception ex)
+                        {
+                            throw;
+                        }
+                        
+                        //string insertQuery = "insert into AssetLocationDet (assetId,latitude,longitude) Values (" + assetId + "," + geoCordinates[0] + "," + geoCordinates[1] + ")";
+                       
+                        
                         return geoCordinates[0] + "," + geoCordinates[1];
                     }
                 }
 
 
+            }
+
+            con.Open();
+            try
+            {
+                cmd = con.CreateCommand();
+                cmd.CommandText = "INSERT INTO AssetLocationDet (assetId,latitude,longitude) VALUES (" + assetId + "," + lat + "," + lon + ")";
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw;
             }
             return lat + "," + lon;
         }
