@@ -14,54 +14,49 @@ namespace MvcApplication1.Controllers
     {
       
         // POST api/postlocation
-        public string Post(string appKey,string assetId,string lat, string lon, [FromBody]string value)
+        public void Post(string appKey,string assetId,string lat, string lon, [FromBody]string value)
         {
             string[] geoCordinates;
             MySqlConnection con = new MySqlConnection(ConfigurationManager.AppSettings["MySqlConString"]);
             MySqlCommand cmd;
             if (appKey == "ttpapikey.asxc123nju89mno0")
             {
-                if (value != null)
-                {
-                    geoCordinates = value.Split(',');
-                    if (geoCordinates.Length > 1)
-                    {
-
-                        con.Open();
-                        try
+                    try
                         {
-                            cmd = con.CreateCommand();
-                            cmd.CommandText = "INSERT INTO AssetLocationDet (assetId,latitude,longitude) VALUES (" + assetId + "," + geoCordinates[0] + "," + geoCordinates[1] + ")";
-                            cmd.ExecuteNonQuery();
+                            con.Open();
+                            try
+                            {
+                                cmd = con.CreateCommand();
+                                if (value != null)
+                                {
+                                    geoCordinates = value.Split(',');
+                                    if (geoCordinates.Length > 1)
+                                    {
+                                        cmd.CommandText = "INSERT INTO AssetLocationDet (assetId,latitude,longitude) VALUES (" + assetId + "," + geoCordinates[0] + "," + geoCordinates[1] + ")";
+                                    }
+                                }
+                                else
+                                {
+                                    cmd.CommandText = "INSERT INTO AssetLocationDet (assetId,latitude,longitude) VALUES (" + assetId + "," + lat + "," + lon + ")";
+                                }
+                                     cmd.ExecuteNonQuery();
+                            }
+                            catch (Exception ex)
+                            {
+                                throw ex.InnerException;
+                            }
+                            finally
+                            {
+                                if (con.State == System.Data.ConnectionState.Open)
+                                {
+                                    con.Close();
+                                }
+                            }
                         }
-                        catch (Exception ex)
-                        {
-                            throw ex.InnerException;
-                        }
-                        
-                        //string insertQuery = "insert into AssetLocationDet (assetId,latitude,longitude) Values (" + assetId + "," + geoCordinates[0] + "," + geoCordinates[1] + ")";
-                       
-                        
-                        return geoCordinates[0] + "," + geoCordinates[1];
-                    }
-                }
-
-
+                        catch (Exception e)
+                        { }
             }
-
-            con.Open();
-            try
-            {
-                cmd = con.CreateCommand();
-                cmd.CommandText = "INSERT INTO AssetLocationDet (assetId,latitude,longitude) VALUES (" + assetId + "," + lat + "," + lon + ")";
-                cmd.ExecuteNonQuery();
-            }
-            catch (Exception ex)
-            {
-                throw ex.InnerException;
-            }
-            return lat + "," + lon;
-        }
+       }
         
         // PUT api/postlocation/5
         public void Put(int id, [FromBody]string value)
