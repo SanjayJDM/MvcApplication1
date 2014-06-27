@@ -18,6 +18,7 @@ namespace MvcApplication1.Controllers
             string[] geoCordinates;
             SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings["SqlConString"]);
             SqlCommand cmd;
+           // DateTime currentDateTime = new DateTime();
             if (appKey == "ttpapikey.asxc123nju89mno0")
             {
                     try
@@ -37,6 +38,7 @@ namespace MvcApplication1.Controllers
                                         cmd.Parameters.Add(new SqlParameter("@assetid",assetId));
                                         cmd.Parameters.Add(new SqlParameter("@latitude",geoCordinates[0]));
                                         cmd.Parameters.Add(new SqlParameter("@longitude",geoCordinates[1]));
+                                       
                                         cmd.ExecuteNonQuery();
                                         //cmd.CommandText = "INSERT INTO AssetLocationDet (assetId,latitude,longitude) VALUES (" + assetId + "," + geoCordinates[0] + "," + geoCordinates[1] + ")";
                                     }
