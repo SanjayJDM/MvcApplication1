@@ -122,7 +122,9 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\Asset2DeviceController.cs" />
     <Compile Include="Controllers\CreateRouteController.cs" />
+    <Compile Include="Controllers\GetAssetIdController.cs" />
     <Compile Include="Controllers\GetLocationController.cs" />
     <Compile Include="Controllers\GetRouteCordinatesController.cs" />
     <Compile Include="Controllers\GetRoutesController.cs" />

@@ -16,7 +16,7 @@ namespace MvcApplication1.Controllers
             SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings["SqlConString"]);
             SqlCommand cmd;
             SqlDataReader reader = null;
-            string jsonStringConstructor = string.Empty;
+            
             if (appKey == "ttpapikey.asxc123nju89mno0")
             {
                 try
@@ -46,6 +46,7 @@ namespace MvcApplication1.Controllers
                             con.Close();
                         }
                     }
+                    return "No AssetID found";
                 }
                 catch (Exception e)
                 {
@@ -53,9 +54,10 @@ namespace MvcApplication1.Controllers
                     return "Error Occured";
                 }
 
-                return "No AssetID found";
-
+            
             }
+            return "No AssetID found";
+
         }
     }
 }
