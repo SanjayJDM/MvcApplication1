@@ -13,6 +13,8 @@ namespace MvcApplication1.Controllers
     {
         public string Get(string appKey, string deviceId)
         {
+            string outputJsonString = string.Empty;
+            string JsonString = string.Empty;
             SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings["SqlConString"]);
             SqlCommand cmd;
             SqlDataReader reader = null;
@@ -24,13 +26,14 @@ namespace MvcApplication1.Controllers
                     con.Open();
                     try
                     {
-                        cmd = new SqlCommand("SELECT AssetId FROM [dbo.AssetDeviceMap] WHERE [DeviceId]=" + deviceId, con);
+                        cmd = new SqlCommand("SELECT AssetID FROM [dbo].[AssetDeviceMap] WHERE [DeviceID]='" + deviceId +"'", con);
                         reader = cmd.ExecuteReader();
+                        
                         while (reader.Read())
                         {
                             // reader["lat"].ToString();
                             //reader["lon"].ToString();
-                            return  "AssetId:" + reader["AssetId"].ToString();
+                            JsonString =  reader["AssetId"].ToString();
                         }
 
                     }
@@ -46,7 +49,7 @@ namespace MvcApplication1.Controllers
                             con.Close();
                         }
                     }
-                    return "No AssetID found";
+;
                 }
                 catch (Exception e)
                 {
@@ -56,7 +59,9 @@ namespace MvcApplication1.Controllers
 
             
             }
-            return "No AssetID found";
+            outputJsonString = "{'AssetId': ";
+            outputJsonString = outputJsonString + "'" + JsonString + "'}";
+            return outputJsonString;
 
         }
     }
