@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using Newtonsoft.Json;
 
 namespace MvcApplication1.Controllers
 {
@@ -59,10 +60,32 @@ namespace MvcApplication1.Controllers
 
             
             }
-            outputJsonString = "{'AssetId': ";
-            outputJsonString = outputJsonString + "'" + JsonString + "'}";
-            return outputJsonString;
+            //outputJsonString = "{'AssetId': ";
+            //outputJsonString = outputJsonString +  JsonString + "}";
+            //Asset a = new Asset();
+            //a.AssetId = JsonString;
+            //string json = JsonConvert.SerializeObject(a);
+            return JsonString;
 
         }
     }
+}
+
+class Asset
+{
+    public Asset()
+	{
+	}
+
+
+    private string _Id;
+    public string AssetId
+    {
+        //set the person name
+        set { this._Id = value; }
+        //get the person name 
+        get { return this._Id; }
+    }
+
+
 }
