@@ -12,7 +12,7 @@ namespace MvcApplication1.Controllers
 {
     public class GetAssetIdController : ApiController
     {
-        public string Get(string appKey, string deviceId)
+        public IEnumerable<string> Get(string appKey, string deviceId)
         {
             string outputJsonString = string.Empty;
             string JsonString = string.Empty;
@@ -34,14 +34,14 @@ namespace MvcApplication1.Controllers
                         {
                             // reader["lat"].ToString();
                             //reader["lon"].ToString();
-                            JsonString =  reader["AssetId"].ToString();
+                            return new string[]{ "AssetID:" + reader["AssetId"].ToString()};
                         }
 
                     }
                     catch (Exception ex)
                     {
                         throw ex.InnerException;
-                        return "Error Occured";
+                        
                     }
                     finally
                     {
@@ -55,7 +55,7 @@ namespace MvcApplication1.Controllers
                 catch (Exception e)
                 {
                     throw e;
-                    return "Error Occured";
+                    
                 }
 
             
@@ -65,7 +65,7 @@ namespace MvcApplication1.Controllers
             //Asset a = new Asset();
             //a.AssetId = JsonString;
             //string json = JsonConvert.SerializeObject(a);
-            return JsonString;
+            return new string[]{"AssetId:0"};
 
         }
     }
