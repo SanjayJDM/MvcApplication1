@@ -65,7 +65,7 @@ namespace MvcApplication1.Controllers
             //Asset a = new Asset();
             //a.AssetId = JsonString;
             //string json = JsonConvert.SerializeObject(a);
-            return new string[]{"AssetId:0"};
+            return new string[]{"AssetId:BLANK"};
 
         }
     }
