@@ -6,6 +6,8 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using MvcApplication1.Models;
+using Newtonsoft.Json;
 
 namespace MvcApplication1.Controllers
 {
@@ -20,10 +22,11 @@ namespace MvcApplication1.Controllers
             SqlDataReader reader = null;
             string outputJsonString = "{'RouteCordinates':[";
             string jsonStringConstructor = string.Empty;
+            RouteCordinates data = new RouteCordinates();
             if (appKey == "ttpapikey.asxc123nju89mno0")
             {
                 try
-                {
+                {   
                     con.Open();
                     try
                     {
@@ -31,18 +34,26 @@ namespace MvcApplication1.Controllers
                         cmd.CommandType = System.Data.CommandType.StoredProcedure;
                         cmd.Parameters.Add(new SqlParameter("@routeId", routeId));
                         reader = cmd.ExecuteReader();
+                        
+                        data.routeId = Convert.ToInt64(routeId);
+                        List<Cordinate> cList = new List<Cordinate>();
+                        Cordinate c;
                         while (reader.Read())
                         {
-                            if (jsonStringConstructor != string.Empty && reader.HasRows)
                             {
-                                jsonStringConstructor = jsonStringConstructor + ",{ 'startLatitude' : '" + reader["startLatitude"].ToString() + "', 'endLatitude' : '" + reader["endLatitude"].ToString() + "','startLongitude' : '" + reader["startLongitude"].ToString() + "', 'endLongitude' : '" + reader["endLongitude"].ToString() + "'}";
-                            }
-                            else
-                            {
-                                jsonStringConstructor = jsonStringConstructor + "{ 'startLatitude' : '" + reader["startLatitude"].ToString() + "', 'endLatitude' : '" + reader["endLatitude"].ToString() + "','startLongitude' : '" + reader["startLongitude"].ToString() + "', 'endLongitude' : '" + reader["endLongitude"].ToString() + "'}";
+                                
+                                c = new Cordinate();
+                                c.seqNo = Convert.ToInt32(reader["seqNo"].ToString());
+                                c.startLat = reader["startLatitude"].ToString();
+                                c.startLon = reader["startLongitude"].ToString(); 
+                                c.endLat = reader["endLatitude"].ToString();
+                                c.endLon = reader["endLongitude"].ToString();
+                                //data.cordinates+ reader["startLatitude"].ToString() + "', 'endLatitude' : '" + reader["endLatitude"].ToString() + "','startLongitude' : '" + reader["startLongitude"].ToString() + "', 'endLongitude' : '" + reader["endLongitude"].ToString() + "'}";
+                                cList.Add(c);
+                                
                             }
                         }
-
+                        data.cordinates = new List<Cordinate>(cList);
                        
                     }
                     catch (Exception ex)
@@ -65,8 +76,8 @@ namespace MvcApplication1.Controllers
                 }
 
             }
-            outputJsonString = outputJsonString + jsonStringConstructor + "]}";
-            return outputJsonString;
+            outputJsonString = JsonConvert.SerializeObject(data);
+            return JsonConvert.SerializeObject(data);
         }
 
         // POST api/getroutecordinates
