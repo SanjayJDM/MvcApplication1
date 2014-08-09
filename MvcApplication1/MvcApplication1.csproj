@@ -131,6 +131,7 @@
     <Compile Include="Controllers\GetRoutesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PostLocationController.cs" />
+    <Compile Include="Controllers\Route2AssetController.cs" />
     <Compile Include="Controllers\SetRouteCordinatesController.cs" />
     <Compile Include="Controllers\UpdateRouteController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
