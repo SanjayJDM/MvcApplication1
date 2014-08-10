@@ -18,7 +18,7 @@ namespace MvcApplication1.Controllers
     {
 
         // POST api/setroutecordinates
-        public void post(string appKey, string routeId, string startlat, string startlon, string endLat, string endLon, [FromBody]string value)
+        public void post(string appKey, [FromBody]string value)
         {
             SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings["SqlConString"]);
             SqlCommand cmd;
